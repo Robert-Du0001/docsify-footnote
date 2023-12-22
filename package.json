@@ -1,0 +1,26 @@
+{
+  "name": "docsify-footnote",
+  "version": "1.0.2",
+  "description": "",
+  "main": "dist/docsify-footnote.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robert-Du0001/docsify-footnote.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Robert-Du0001/docsify-footnote/issues"
+  },
+  "scripts": {
+    "build": "uglifyjs ./src/docsify-footnote.js -m -o ./dist/docsify-footnote.min.js",
+    "publish": "npm publish --access=public"
+  },
+  "keywords": [
+    "docsify",
+    "docsify-plugin",
+    "footnote",
+    "docsify-footnote",
+    "markdown-footnote"
+  ],
+  "author": "Robert Du",
+  "license": "MIT"
+}
