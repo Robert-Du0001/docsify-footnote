@@ -1,6 +1,6 @@
 {
   "name": "docsify-footnote",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/docsify-footnote.min.js",
   "repository": {
