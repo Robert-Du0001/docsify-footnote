@@ -1,7 +1,6 @@
 (function () {
     var footnotePlugin = function (hook, vm) {
         hook.beforeEach(function(markdown) {
-            console.log(markdown);
             const footnoteRegex = /(\[\^.+\]:\s.*(\n|$))|(\^\[.*?\])/gm;
 
             // To temporarily bypass footnotes within code blocks, replace all code blocks with placeholders first.
