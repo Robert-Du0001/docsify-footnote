@@ -1,7 +1,7 @@
 (function () {
     var footnotePlugin = function (hook, vm) {
         hook.beforeEach(function(markdown) {
-            const footnoteRegex = /(\[\^.+\]:\s.*(\n|$))|(\^\[.*?\])/gm;
+            const footnoteRegex = /(^\[\^.+?\]:\s(.\n?)*?\n$)|(\^\[(.\n?)*?\])/gm;
 
             // To temporarily bypass footnotes within code blocks, replace all code blocks with placeholders first.
             const codeBlocks = markdown.match(/```.*?```/gsm);
@@ -15,28 +15,44 @@
                 const matchList = markdown.match(footnoteRegex);
 
                 const footnoteList = [];
-                matchList.forEach(function(e, i) {
-                    // inline-style footnote
-                    if (/\^\[.*?\]/.test(e)) {
+                let i = 1;
+                matchList.forEach(function(e) {
+                    if (/\^\[.*?\]/s.test(e)) { // inline-style footnote
                         markdown = markdown.replace(
                             e, 
-                            `<sup class="footnote-symbol" id="ft-${i}">[\[${i+1}\]](#ftref-${i})</sup>`
+                            `<sup class="footnote-symbol" id="ft-${i}">[\[${i}\]](#ftref-${i})</sup>`
                         );
             
                         footnoteList.push(
-                            `${i}. ${e.match(/\[(.*)\]/)[1]} <stronge id="ftref-${i}">[↩︎](#ft-${i})</stronge>\n`
+                            `${i}. ${e.match(/\[(.*)\]/s)[1].trim().replaceAll('\n', '<br />')} <stronge id="ftref-${i}">[↩︎](#ft-${i})</stronge>\n`
                         );
-                    }else { // reference-style footnote
-                        const noteMap = e.split(': ');
 
-                        markdown = markdown.replace(
-                            noteMap[0], 
-                            `<sup class="footnote-symbol" id="ft-${i}">[\[${i+1}\]](#ftref-${i})</sup>`
-                        ).replace(e, '');
-            
-                        footnoteList.push(
-                            `${i}. ${noteMap[1].replace('\n', '')} <stronge id="ftref-${i}">[↩︎](#ft-${i})</stronge>\n`
-                        );
+                        i++;
+                    }else { // reference-style footnote
+                        const noteMap = e.split(':');
+                        const refRegex = new RegExp('\\[\\^'+noteMap[0].replace(/[\[\^\]]/g, '')+'\\](?!:)', 'g');
+
+                        markdown = markdown.replace(e, '');
+
+                        const refMatchList = markdown.match(refRegex);
+                        if (refMatchList) {
+                            const subAnchorIconList = [];
+                            refMatchList.forEach(function(e1, j) {
+                                const subAnchor = j > 0 ? '-'+j : '';
+                                markdown = markdown.replace(
+                                    noteMap[0],
+                                    `<sup class="footnote-symbol" id="ft-${i+subAnchor}">[\[${i+subAnchor}\]](#ftref-${i+subAnchor})</sup>`
+                                );
+
+                                subAnchorIconList.push(`<stronge id="ftref-${i+subAnchor}">[↩︎](#ft-${i+subAnchor})</stronge>`)
+                            });
+
+                            footnoteList.push(
+                                `${i}. ${noteMap[1].trim().replaceAll('\n', '<br />')} ${subAnchorIconList.join(' ')}\n`
+                            );
+
+                            i++;
+                        }
                     }
                 })
 
