@@ -1,7 +1,9 @@
 (function () {
     var footnotePlugin = function (hook, vm) {
         hook.beforeEach(function(markdown) {
-            const footnoteRegex = /(^\[\^.+?\]:\s(.\n?)*?\n$)|(\^\[(.\n?)*?\])/gm;
+            markdown = markdown.replaceAll('\r\n', '\n');
+
+            const footnoteRegex = /(^\[\^.+?\]:.+?(?=(\n\n|\n$|\n\[\^.+?\]:|$(?!\n))))|(\^\[.+?\])/gsm;
 
             // To temporarily bypass footnotes within code blocks, replace all code blocks with placeholders first.
             const codeBlocks = markdown.match(/```.*?```/gsm);
@@ -56,7 +58,7 @@
                     }
                 })
 
-                markdown += `\n---\n ${footnoteList.join('')}`;
+                markdown += `\n\n---\n ${footnoteList.join('')}`;
             }
 
             // restore code blocks
