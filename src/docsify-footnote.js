@@ -31,7 +31,7 @@
 
                         i++;
                     }else { // reference-style footnote
-                        const noteMap = e.split(':');
+                        const noteMap = e.split(/(?<=\]):/);
                         const refRegex = new RegExp('\\[\\^'+noteMap[0].replace(/[\[\^\]]/g, '')+'\\](?!:)', 'g');
 
                         markdown = markdown.replace(e, '');
