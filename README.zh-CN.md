@@ -37,5 +37,17 @@ tf1[^2]
 
 ![demo-1](/docs/assets/imgs/example.png)
 
+## 配置
+
+```javascript
+window.$docsify = {
+  docsifyFootnote: {
+    // 当设置为true时，可以隐藏子锚点编号
+    // https://github.com/Robert-Du0001/docsify-footnote/pull/5
+    hideSubAnchor: true,
+  }
+}
+```
+
 ## License
 [MIT License](LICENSE)

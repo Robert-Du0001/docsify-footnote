@@ -37,5 +37,17 @@ tf1[^2]
 
 ![demo-1](/docs/assets/imgs/example.png)
 
+## Configuration 
+
+```javascript
+window.$docsify = {
+  docsifyFootnote: {
+    // Set to true to hide the sub-anchor numbering.
+    // https://github.com/Robert-Du0001/docsify-footnote/pull/5
+    hideSubAnchor: true,
+  }
+}
+```
+
 ## License
 [MIT License](LICENSE)

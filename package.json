@@ -1,6 +1,6 @@
 {
   "name": "docsify-footnote",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "dist/docsify-footnote.min.js",
   "repository": {
@@ -22,5 +22,13 @@
     "markdown-footnote"
   ],
   "author": "Robert Du",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^9.0.11"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && git add dist/docsify-footnote.min.js"
+    }
+  }
 }
