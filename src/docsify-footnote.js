@@ -41,9 +41,10 @@
                             const subAnchorIconList = [];
                             refMatchList.forEach(function(e1, j) {
                                 const subAnchor = j > 0 ? '-'+j : '';
+                                const displayIndex = $props.hideSubAnchor ? i : i+subAnchor;
                                 markdown = markdown.replace(
                                     noteMap[0],
-                                    `<sup class="footnote-symbol" id="ft-${i+subAnchor}">[\[${i+subAnchor}\]](#ftref-${i+subAnchor})</sup>`
+                                    `<sup class="footnote-symbol" id="ft-${i+subAnchor}">[\[${displayIndex}\]](#ftref-${i+subAnchor})</sup>`
                                 );
 
                                 subAnchorIconList.push(`<stronge id="ftref-${i+subAnchor}">[↩︎](#ft-${i+subAnchor})</stronge>`)
@@ -74,5 +75,8 @@
 
     // Add plugin to docsify's plugin array
     $docsify = $docsify || {};
+
+    $props = $docsify.docsifyFootnote || {};
+
     $docsify.plugins = [].concat($docsify.plugins || [], footnotePlugin);
 })();
